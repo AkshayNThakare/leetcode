@@ -18,38 +18,30 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
-        if (root == NULL) {
+        if(!root)
             return {};
-        }
-        
+
+        vector<int> res;
         queue<TreeNode*> q;
         q.push(root);
         
-        vector<int> result;
-        
-        while (!q.empty()) {
+        while(!q.empty()){
             int count = q.size();
-            
-            for (int i = count; i > 0; i--) {
-                TreeNode* node = q.front();
+            res.push_back(q.back()->val);
+            for(int i = 0; i < count; i++){
+                root = q.front();
                 q.pop();
-                
-                if (i == count) {
-                    result.push_back(node->val);
-                }
-                
-                if (node->right != NULL) {
-                    q.push(node->right);
-                }
-                if (node->left != NULL) {
-                    q.push(node->left);
+                if(root->left)
+                    q.push(root->left);
+                if(root->right){                
+                    q.push(root->right);
                 }
             }
         }
-        
-        return result;
+        return res;
     }
 };
